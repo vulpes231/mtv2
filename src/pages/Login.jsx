@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const Login = () => {
-  return <div>Login</div>;
+  useEffect(() => {
+    document.title = "Metasavings - Log In";
+  }, []);
+  return (
+    <div className="h-screen w-full relative bg flex items-center justify-center">
+      <form action=""></form>
+    </div>
+  );
 };
 
 export default Login;
