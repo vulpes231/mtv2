@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { devServer, sendError } from "../constants";
+import { devServer, liveServer, sendError } from "../constants";
 import axios from "axios";
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 export const loginUser = createAsyncThunk(
   "login/loginUser",
   async (formData) => {
-    const url = `${devServer}`;
+    const url = `${devServer}/auth`;
     try {
       const response = await axios.post(url, formData, {
         headers: {
@@ -35,12 +35,12 @@ const loginSlice = createSlice({
         state.loginLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.loginLoading = true;
+        state.loginLoading = false;
         state.accessToken = action.payload.accessToken;
         state.loginError = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.loginLoading = true;
+        state.loginLoading = false;
         state.loginError = action.error.message;
         state.accessToken = false;
       });

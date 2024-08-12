@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .bg {
-  background-image: url("./assets/login.jpg");
+  background-image: url("./assets/meta.jpeg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

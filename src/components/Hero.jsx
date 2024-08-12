@@ -1,12 +1,12 @@
 import React from "react";
-import { bg } from "../assets";
+import { bg2 } from "../assets";
 
 const Hero = () => {
   return (
     <div className="relative">
-      <img src={bg} alt="" className="w-full h-[400px] " />
+      <img src={bg2} alt="" className="w-full h-[400px] bg-contain bg-center" />
       <div className="absolute w-full top-0 left-0 bg-black h-full bg-opacity-60 text-white">
-        <div className="py-6 flex flex-col gap-4 lg:max-w-[1100px] mx-auto">
+        <div className="p-6 flex flex-col gap-4 lg:max-w-[1100px] mx-auto">
           <h3 className="text-xl md:text-4xl capitalize">
             keep banking simple.
           </h3>
