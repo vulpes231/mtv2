@@ -1,4 +1,5 @@
+import Dashboard from "./Dashboard";
+import Detail from "./Detail";
 import Enroll from "./Enroll";
-import Login from "./Login";
 
-export { Login, Enroll };
+export { Enroll, Dashboard, Detail };

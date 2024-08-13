@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Landing, Navbar } from "./components";
 import { Route, Routes } from "react-router-dom";
-import { Enroll, Login } from "./pages";
+import { Dashboard, Detail, Enroll } from "./pages";
 
 const App = () => {
   const [lightMode, setLightMode] = useState(false);
@@ -19,7 +19,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/signup" element={<Enroll />} />
-        <Route path="/signin" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/account" element={<Detail />} />
       </Routes>
     </div>
   );

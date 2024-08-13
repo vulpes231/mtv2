@@ -14,7 +14,7 @@ const getAccessToken = () => {
   let accessToken;
   const tokenString = sessionStorage.getItem("accessToken");
   if (!tokenString) {
-    throw new Error("Token string not found");
+    return;
   } else {
     accessToken = JSON.parse(tokenString);
   }

@@ -44,7 +44,7 @@ const Mobilelogin = ({ closeModal }) => {
   useEffect(() => {
     let timeout;
     if (accessToken) {
-      sessionStorage.setItem("accessToken", accessToken);
+      sessionStorage.setItem("accessToken", JSON.stringify(accessToken));
       timeout = 3000;
       setTimeout(() => {
         navigate("/dashboard");

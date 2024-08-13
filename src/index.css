@@ -10,3 +10,7 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.custom-height {
+  height: calc(100vh - 60px);
+}
