@@ -17,8 +17,11 @@ const Dashboard = () => {
       navigate("/");
     } else {
       dispatch(getUserAccounts());
+      document.title = "Dashboard";
     }
   }, [accessToken, navigate]);
+
+  // console.log(accessToken);
 
   return (
     <div>

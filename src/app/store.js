@@ -3,6 +3,7 @@ import loginReducer from "../features/loginSlice";
 import enrollReducer from "../features/enrollSlice";
 import accountReducer from "../features/accountSlice";
 import transactionReducer from "../features/transactionSlice";
+import logoutReducer from "../features/logoutSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     enroll: enrollReducer,
     account: accountReducer,
     trnx: transactionReducer,
+    logout: logoutReducer,
   },
 });
 

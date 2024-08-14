@@ -3,6 +3,29 @@ import { MdLock } from "react-icons/md";
 import { format } from "date-fns";
 import Recentactivity from "./Recentactivity";
 import numeral from "numeral";
+import Logout from "./Logout";
+
+const MaskedNumber = ({ number }) => {
+  // Convert the number to a string (if it's not already)
+  const numStr = number.toString();
+
+  // Check if the length of the number string is greater than 4
+  if (numStr.length <= 4) {
+    // If the length is 4 or less, just return the number as is
+    return <h5 className="font-normal">{numStr}</h5>;
+  }
+
+  // Slice the last 4 characters
+  const lastFour = numStr.slice(-4);
+
+  // Create the masked part with Xs
+  const maskedPart = "X".repeat(numStr.length - 4);
+
+  // Combine the masked part with the last four characters
+  const maskedNumber = maskedPart + lastFour;
+
+  return <h5 className="font-normal">{maskedNumber}</h5>;
+};
 
 const Accountgrid = ({ number, type, bal }) => {
   return (
@@ -10,7 +33,7 @@ const Accountgrid = ({ number, type, bal }) => {
       <div className="flex justify-between items-center">
         <div>
           <h3 className="font-medium uppercase text-blue-700">{type}</h3>
-          <h5 className="font-normal ">{number}</h5>
+          <MaskedNumber number={number} />
         </div>
         <div>
           <h3
@@ -34,22 +57,25 @@ const Account = ({ account }) => {
 
   const currentDate = format(new Date(), "yyyy/mm/dd\tHH:mm a");
 
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  // console.log(user);
+
   return (
     <div className="bg-slate-50 ">
       <div className="grid md:grid-cols-3 custom-height">
-        <div className="col-span-2 p-6 flex flex-col gap-4">
+        <div className="lg:col-span-2 p-6 flex flex-col gap-4">
           <h3 className="text-md md:text-lg capitalize">account summary</h3>
-          <div className="flex flex-col gap-4 lg:flex-row">
-            {account?.map((acct, index) => {
+          <div className="grid gap-4 md:grid-cols-2">
+            {account?.accounts?.map((acct, index) => {
               return (
                 <div
                   key={index}
                   className="bg-white shadow-xl p-6 flex flex-col gap-3 rounded-sm w-full"
                 >
                   <Accountgrid
-                    type={acct.account_type}
-                    number={acct.account_num}
-                    bal={acct.available_bal}
+                    type={acct.accountType}
+                    number={acct.accountNo}
+                    bal={acct.balance}
                   />
 
                   <button
@@ -64,14 +90,14 @@ const Account = ({ account }) => {
           </div>
           <Recentactivity />
         </div>
-        <div className=" bg-zinc-800 p-6 text-white flex flex-col items-center justify-start">
-          <h3 className="text-lg lg:text-xl">Welcome user</h3>
+        <div className=" bg-zinc-800 p-6 text-white flex flex-col items-center lg:justify-start w-full ">
+          <h3 className="text-lg lg:text-xl capitalize ">
+            Welcome {user?.username}
+          </h3>
           <small className="font-thin">
             Your last login was on {currentDate}
           </small>
-          <span className="underline flex items-center gap-1">
-            <MdLock /> Sign out
-          </span>
+          <Logout />
         </div>
       </div>
     </div>

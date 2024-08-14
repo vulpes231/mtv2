@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { devServer, sendError } from "../constants";
+import { devServer, liveServer, sendError } from "../constants";
 import axios from "axios";
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 export const createUser = createAsyncThunk(
   "enroll/createUser",
   async (formData) => {
-    const url = `${devServer}`;
+    const url = `${liveServer}`;
     try {
       const response = await axios.post(url, formData, {
         headers: {

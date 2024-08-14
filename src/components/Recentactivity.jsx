@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAccessToken } from "../constants";
 import { getUserTrnxs } from "../features/transactionSlice";
 import numeral from "numeral";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const headers = [
   { id: 1, name: "date" },
@@ -13,7 +13,6 @@ const headers = [
 
 const Recentactivity = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const accessToken = getAccessToken();
 
   const { userTrnxs } = useSelector((state) => state.trnx);
@@ -23,6 +22,9 @@ const Recentactivity = () => {
       dispatch(getUserTrnxs());
     }
   }, [dispatch, accessToken]);
+
+  // Limit the transactions to a maximum of 9
+  const transactionsToDisplay = userTrnxs?.userTransactions?.slice(0, 9) || [];
 
   return (
     <div className="flex flex-col gap-4">
@@ -44,22 +46,20 @@ const Recentactivity = () => {
             </tr>
           </thead>
           <tbody>
-            {userTrnxs.map((data, index) => (
+            {transactionsToDisplay.map((data, index) => (
               <tr
-                key={data.id}
-                className={`text-xs font-thin ${
+                key={data._id}
+                className={`text-xs font-medium  ${
                   index % 2 !== 0 ? "bg-slate-50" : "bg-white"
                 }`}
               >
                 <td className="px-4 py-2.5 text-center">{data.date}</td>
                 <td className="px-4 py-2.5 text-center capitalize">
-                  {data.memo}
+                  {data.description}
                 </td>
                 <td
                   className={`px-4 py-2.5 text-center ${
-                    data.trans_type === "credit"
-                      ? "text-green-500"
-                      : "text-red-500"
+                    data.type === "credit" ? "text-green-500" : "text-red-500"
                   }`}
                 >
                   $

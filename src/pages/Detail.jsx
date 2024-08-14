@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Authnav } from "../components";
+import Transactions from "../components/Transactions";
 
 const Detail = () => {
+  useEffect(() => {
+    document.title = "Transactions";
+  }, []);
   return (
-    <div>
+    <div className="bg-slate-50 custom-height">
       <Authnav />
+      <Transactions />
     </div>
   );
 };

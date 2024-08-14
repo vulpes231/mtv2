@@ -23,7 +23,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState(initialState);
 
-  const { loginLoading, loginError, accessToken } = useSelector(
+  const { loginLoading, loginError, accessToken, user } = useSelector(
     (state) => state.login
   );
 
@@ -43,15 +43,16 @@ const LoginForm = () => {
 
   useEffect(() => {
     let timeout;
-    if (accessToken) {
+    if (accessToken && user) {
       sessionStorage.setItem("accessToken", JSON.stringify(accessToken));
+      sessionStorage.setItem("user", JSON.stringify(user));
       timeout = 3000;
       setTimeout(() => {
         navigate("/dashboard");
       }, timeout);
     }
     return () => clearTimeout(timeout);
-  }, [accessToken, navigate]);
+  }, [accessToken, navigate, user]);
 
   return (
     <form className="flex items-center gap-6">
