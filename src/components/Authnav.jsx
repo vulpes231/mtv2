@@ -8,6 +8,7 @@ const authLinks = [
     id: 1,
     name: "transfer & pay",
     icon: <MdCurrencyExchange />,
+    path: "/transfer",
   },
   {
     id: 2,
@@ -34,7 +35,7 @@ const Authnav = () => {
       <nav className="bg-white shadow-sm w-full flex justify-between items-center p-4">
         <h1
           onClick={goToDash}
-          className="capitalize font-bold text-xl lg:text-2xl cursor-pointer"
+          className="uppercase font-bold text-xl lg:text-2xl cursor-pointer"
         >
           meta<span className="text-blue-700">bank</span>
         </h1>
@@ -44,6 +45,7 @@ const Authnav = () => {
               <Link
                 className="flex items-center gap-2 capitalize"
                 key={link.id}
+                to={link.path}
               >
                 <span>{link.icon}</span>
                 <span>{link.name}</span>

@@ -64,7 +64,7 @@ const Account = ({ account }) => {
     <div className="bg-slate-50 ">
       <div className="grid md:grid-cols-3 custom-height">
         <div className="lg:col-span-2 p-6 flex flex-col gap-4">
-          <h3 className="text-md md:text-lg capitalize">account summary</h3>
+          <h3 className="text-lg md:text-xl capitalize">account summary</h3>
           <div className="grid gap-4 md:grid-cols-2">
             {account?.accounts?.map((acct, index) => {
               return (

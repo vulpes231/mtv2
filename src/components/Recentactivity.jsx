@@ -29,7 +29,7 @@ const Recentactivity = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center px-3">
-        <h3 className="text-md md:text-lg capitalize">Recent Activities</h3>
+        <h3 className="text-lg md:text-xl capitalize">Recent Activities</h3>
         <Link to={"/account"} className="underline cursor-pointer">
           See all
         </Link>
