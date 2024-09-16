@@ -7,13 +7,12 @@ const authLinks = [
   {
     id: 1,
     name: "transfer & pay",
-    icon: <MdCurrencyExchange />,
     path: "/transfer",
   },
   {
     id: 2,
     name: "more",
-    icon: <MdMenu />,
+    path: "",
   },
 ];
 
@@ -47,7 +46,13 @@ const Authnav = () => {
                 key={link.id}
                 to={link.path}
               >
-                <span>{link.icon}</span>
+                <span>
+                  {link.name.includes("transfer") ? (
+                    <MdCurrencyExchange />
+                  ) : link.name.includes("more") ? (
+                    <MdMenu />
+                  ) : null}
+                </span>
                 <span>{link.name}</span>
               </Link>
             );
