@@ -80,7 +80,7 @@ const Changepass = () => {
             password
           </label>
           <input
-            type="text"
+            type="password"
             placeholder="current password"
             onChange={handleInput}
             value={form.password}
@@ -95,7 +95,7 @@ const Changepass = () => {
             new password
           </label>
           <input
-            type="text"
+            type="password"
             placeholder="new password"
             onChange={handleInput}
             value={form.newPassword}
@@ -110,7 +110,7 @@ const Changepass = () => {
             confirm new password
           </label>
           <input
-            type="text"
+            type="password"
             placeholder="confirm new password"
             onChange={handleInput}
             value={form.confirmNewPassword}
