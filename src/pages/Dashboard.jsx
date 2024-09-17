@@ -17,7 +17,7 @@ const Dashboard = () => {
       navigate("/");
     } else {
       dispatch(getUserAccounts());
-      document.title = "Dashboard";
+      document.title = "Meta - Dashboard";
     }
   }, [accessToken, navigate]);
 

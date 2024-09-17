@@ -4,6 +4,7 @@ import enrollReducer from "../features/enrollSlice";
 import accountReducer from "../features/accountSlice";
 import transactionReducer from "../features/transactionSlice";
 import logoutReducer from "../features/logoutSlice";
+import userReducer from "../features/userSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     account: accountReducer,
     trnx: transactionReducer,
     logout: logoutReducer,
+    user: userReducer,
   },
 });
 

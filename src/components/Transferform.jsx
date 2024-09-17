@@ -3,6 +3,7 @@ import { getAccessToken } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAccounts } from "../features/accountSlice";
 
+/* eslint-disable react/prop-types */
 const Formdiv = ({ children }) => {
   return <div className="flex flex-col gap-1">{children}</div>;
 };
@@ -26,7 +27,7 @@ const Select = ({ value, handleChange, name, children }) => {
       value={value}
       onChange={handleChange}
       name={name}
-      className="w-full p-2 border outline-none focus:border-slate-500 bg-transparent"
+      className="w-full p-2 border outline-none focus:border-slate-500 bg-transparent capitalize"
     >
       {children}
     </select>
@@ -82,10 +83,7 @@ const Transferform = () => {
 
   return (
     <div className="flex items-center justify-center w-full h-full">
-      <form
-        action=""
-        className="flex flex-col gap-6 bg-white p-6 capitalize w-full md:w-[380px] md:mx-auto"
-      >
+      <form className="flex flex-col gap-6 bg-white p-6 capitalize w-full md:w-[380px] md:mx-auto shadow-xl font-inherit">
         <div className="flex justify-between">
           <h3>Transfer</h3>
           <small className="underline text-blue-500">
@@ -93,7 +91,9 @@ const Transferform = () => {
           </small>
         </div>
         <Formdiv>
-          <label htmlFor="">from account*</label>
+          <label htmlFor="">
+            from account <span className="text-red-500">*</span>{" "}
+          </label>
           <Select
             name={"fromAccount"}
             value={form.fromAccount}
@@ -104,7 +104,9 @@ const Transferform = () => {
           </Select>
         </Formdiv>
         <Formdiv>
-          <label htmlFor="">to account*</label>
+          <label htmlFor="">
+            to account <span className="text-red-500">*</span>{" "}
+          </label>
           <Select
             name={"toAccount"}
             value={form.toAccount}
@@ -114,7 +116,9 @@ const Transferform = () => {
           </Select>
         </Formdiv>
         <Formdiv>
-          <label htmlFor="">amount*</label>
+          <label htmlFor="">
+            amount <span className="text-red-500">*</span>
+          </label>
           <Input
             type={"text"}
             name={"amount"}

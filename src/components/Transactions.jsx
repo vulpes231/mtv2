@@ -17,8 +17,8 @@ const Transactions = () => {
   const { userAccounts } = useSelector((state) => state.account);
 
   const [displayOption, setDisplayOption] = useState("all");
-
-  //   console.log(userAccounts);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   const dispatch = useDispatch();
   const accessToken = getAccessToken();
@@ -30,32 +30,47 @@ const Transactions = () => {
     }
   }, [dispatch, accessToken]);
 
-  const myAccounts = userAccounts?.accounts?.map((acct) => {
-    return (
-      <option className="uppercase " key={acct._id} value={acct.accountNo}>
-        {`${acct.accountType} - ${acct.accountNo}`}
-      </option>
-    );
-  });
+  const myAccounts = userAccounts?.accounts?.map((acct) => (
+    <option className="uppercase" key={acct._id} value={acct.accountNo}>
+      {`${acct.accountType} - ${acct.accountNo}`}
+    </option>
+  ));
+
+  // Pagination Logic
+  const totalTransactions = userTrnxs?.userTransactions?.length || 0;
+  const totalPages = Math.ceil(totalTransactions / itemsPerPage);
+
+  const currentTransactions =
+    userTrnxs?.userTransactions?.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    ) || [];
+
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
   return (
     <section className="w-full p-6">
-      <div className="w-full lg:w-[1000px] lg:mx-auto flex flex-col gap-6">
+      <div className="w-full lg:w-[1000px] lg:mx-auto flex flex-col gap-6 p-6">
         <div className="flex gap-1 justify-between items-start capitalize">
           <h3 className="text-md md:text-lg capitalize">Transactions</h3>
-          <div className="flex flex-col">
-            <label htmlFor="">select account</label>
+          <div className="flex items-center gap-2">
+            <label htmlFor="">Select account</label>
             <select
               name="account"
-              className="bg-transparent border p-2 uppercase"
+              className="bg-transparent border p-2 uppercase w-[90px]"
             >
-              <option value="">all</option>
+              <option value="">All</option>
               {myAccounts}
             </select>
           </div>
         </div>
 
-        {/* table */}
-        <div className="overflow-auto bg-white">
+        {/* Table */}
+        <div className="overflow-auto bg-white p-6 shadow-xl">
           <table className="min-w-full">
             <thead className="bg-zinc-500 text-white font-medium uppercase">
               <tr>
@@ -67,7 +82,7 @@ const Transactions = () => {
               </tr>
             </thead>
             <tbody>
-              {userTrnxs?.userTransactions?.map((data, index) => (
+              {currentTransactions.map((data, index) => (
                 <tr
                   key={data._id}
                   className={`text-xs font-medium ${
@@ -95,7 +110,7 @@ const Transactions = () => {
                       "0,0.00"
                     )}
                   </td>
-                  <td className={`px-4 py-2.5 text-center`}>
+                  <td className="px-4 py-2.5 text-center">
                     $
                     {numeral(parseFloat(data.balance).toFixed(2)).format(
                       "0,0.00"
@@ -105,6 +120,27 @@ const Transactions = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-between items-center mt-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-200 rounded"
+          >
+            Previous
+          </button>
+          <div>
+            Showing page {currentPage} of {totalPages}
+          </div>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-200 rounded"
+          >
+            Next
+          </button>
         </div>
       </div>
     </section>

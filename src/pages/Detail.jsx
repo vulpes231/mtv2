@@ -7,7 +7,7 @@ const Detail = () => {
     document.title = "Transactions";
   }, []);
   return (
-    <div className="bg-slate-50 custom-height">
+    <div className="bg-slate-50 h-full">
       <Authnav />
       <Transactions />
     </div>

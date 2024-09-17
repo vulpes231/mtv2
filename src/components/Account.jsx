@@ -1,9 +1,10 @@
 import React from "react";
-import { MdLock } from "react-icons/md";
 import { format } from "date-fns";
 import Recentactivity from "./Recentactivity";
 import numeral from "numeral";
 import Logout from "./Logout";
+
+/* eslint-disable react/prop-types */
 
 const MaskedNumber = ({ number }) => {
   // Convert the number to a string (if it's not already)
@@ -28,6 +29,7 @@ const MaskedNumber = ({ number }) => {
 };
 
 const Accountgrid = ({ number, type, bal }) => {
+  // console.log(type);
   return (
     <div className="w-full">
       <div className="flex justify-between items-center">
@@ -37,10 +39,13 @@ const Accountgrid = ({ number, type, bal }) => {
         </div>
         <div>
           <h3
-            className={`font-bold text-md tracking-wide ${
-              bal < 0 ? "text-red-500" : "text-slate-800"
+            className={`font-bold text-md tracking-wide flex items-center gap-0.5 ${
+              type.includes("access") ? "text-red-500" : "text-slate-800"
             }`}
           >
+            <span className={`${type.includes("access") ? "flex" : "hidden"}`}>
+              -
+            </span>{" "}
             ${numeral(bal).format("0,0.00")}
           </h3>
           <small className="capitalize font-thin">available balance</small>
