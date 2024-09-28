@@ -32,7 +32,7 @@ export const getUserTrnxs = createAsyncThunk("trnx/getUserTrnxs", async () => {
 export const getAcctTrnxs = createAsyncThunk(
   "trnx/getAcctTrnxs",
   async (acctNo) => {
-    const url = `${devServer}/transactions/${acctNo}`;
+    const url = `${liveServer}/transactions/${acctNo}`;
     const accessToken = getAccessToken();
     try {
       const response = await axios.get(url, {
