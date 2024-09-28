@@ -6,6 +6,9 @@ const initialState = {
   getTrnxLoad: false,
   getTrnxError: false,
   userTrnxs: [],
+  getAcctTrnxLoad: false,
+  getAcctTrnxError: false,
+  acctTrnxs: [],
 };
 
 export const getUserTrnxs = createAsyncThunk("trnx/getUserTrnxs", async () => {
@@ -26,6 +29,27 @@ export const getUserTrnxs = createAsyncThunk("trnx/getUserTrnxs", async () => {
   }
 });
 
+export const getAcctTrnxs = createAsyncThunk(
+  "trnx/getAcctTrnxs",
+  async (acctNo) => {
+    const url = `${devServer}/transactions/${acctNo}`;
+    const accessToken = getAccessToken();
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      // console.log(response.data);
+      return response.data;
+    } catch (error) {
+      sendError(error);
+    }
+  }
+);
+
 const transactionSlice = createSlice({
   name: "trnx",
   initialState,
@@ -44,6 +68,20 @@ const transactionSlice = createSlice({
         state.getTrnxLoad = false;
         state.userTrnxs = false;
         state.getTrnxError = action.error.message;
+      });
+    builder
+      .addCase(getAcctTrnxs.pending, (state) => {
+        state.getAcctTrnxLoad = true;
+      })
+      .addCase(getAcctTrnxs.fulfilled, (state, action) => {
+        state.getAcctTrnxLoad = false;
+        state.getAcctTrnxError = false;
+        state.acctTrnxs = action.payload;
+      })
+      .addCase(getAcctTrnxs.rejected, (state, action) => {
+        state.getAcctTrnxLoad = false;
+        state.getAcctTrnxError = action.error.message;
+        state.acctTrnxs = false;
       });
   },
 });

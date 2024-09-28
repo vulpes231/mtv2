@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Landing, Navbar } from "./components";
 import { Route, Routes } from "react-router-dom";
 import { Dashboard, Detail, Enroll, Profile, Transfer } from "./pages";
+import AccountTrnx from "./pages/AccountTrnx";
 
 const App = () => {
   const [lightMode, setLightMode] = useState(false);
@@ -23,6 +24,10 @@ const App = () => {
         <Route path="/account" element={<Detail />} />
         <Route path="/transfer" element={<Transfer />} />
         <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/transactions/:accountNo/:accountType"
+          element={<AccountTrnx />}
+        />
       </Routes>
     </div>
   );

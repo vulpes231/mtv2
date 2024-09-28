@@ -17,6 +17,8 @@ const Recentactivity = () => {
 
   const { userTrnxs } = useSelector((state) => state.trnx);
 
+  // console.log(userTrnxs);
+
   useEffect(() => {
     if (accessToken) {
       dispatch(getUserTrnxs());

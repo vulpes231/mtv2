@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import Recentactivity from "./Recentactivity";
 import numeral from "numeral";
 import Logout from "./Logout";
+import { useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 
@@ -28,10 +29,9 @@ const MaskedNumber = ({ number }) => {
   return <h5 className="font-normal">{maskedNumber}</h5>;
 };
 
-const Accountgrid = ({ number, type, bal }) => {
-  // console.log(type);
+const Accountgrid = ({ number, type, bal, showTrnxs }) => {
   return (
-    <div className="w-full">
+    <div className="w-full cursor-pointer" onClick={showTrnxs}>
       <div className="flex justify-between items-center">
         <div>
           <h3 className="font-medium uppercase text-blue-700">{type}</h3>
@@ -56,14 +56,15 @@ const Accountgrid = ({ number, type, bal }) => {
 };
 
 const Account = ({ account }) => {
-  const viewActivity = (e) => {
-    e.preventDefault();
+  const navigate = useNavigate();
+  const viewActivity = (acct) => {
+    const accountNo = acct.accountNo;
+    const accountType = acct.accountType;
+    navigate(`/transactions/${accountNo}/${accountType}`);
   };
 
-  const currentDate = format(new Date(), "yyyy/mm/dd\tHH:mm a");
-
+  const currentDate = format(new Date(), "yyyy/MM/dd\tHH:mm a");
   const user = JSON.parse(sessionStorage.getItem("user"));
-  // console.log(user);
 
   return (
     <div className="bg-slate-50 ">
@@ -81,21 +82,15 @@ const Account = ({ account }) => {
                     type={acct.accountType}
                     number={acct.accountNo}
                     bal={acct.balance}
+                    showTrnxs={() => viewActivity(acct)} // Correctly passing the account number
                   />
-
-                  <button
-                    onClick={viewActivity}
-                    className="font-medium text-gray-300 uppercase text-[0.5rem] whitespace-nowrap flex justify-start"
-                  >
-                    view activity
-                  </button>
                 </div>
               );
             })}
           </div>
           <Recentactivity />
         </div>
-        <div className=" bg-zinc-800 p-6 text-white flex flex-col items-center lg:justify-start w-full ">
+        <div className="bg-zinc-800 p-6 text-white flex flex-col items-center lg:justify-start w-full ">
           <h3 className="text-lg lg:text-xl capitalize ">
             Welcome {user?.username}
           </h3>
