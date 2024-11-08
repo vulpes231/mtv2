@@ -1,7 +1,6 @@
 {
   "name": "meta-v2",
   "version": "0.0.0",
-  "module": "index.ts",
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "autoprefixer": "^10.4.20",

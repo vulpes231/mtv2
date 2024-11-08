@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAccessToken } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAccounts } from "../features/accountSlice";
+import { getExternalAccs } from "../features/externalSlice";
 
 /* eslint-disable react/prop-types */
 const Formdiv = ({ children }) => {
@@ -47,6 +48,7 @@ const Transferform = () => {
   const accessToken = getAccessToken();
 
   const { userAccounts } = useSelector((state) => state.account);
+  const { externalAccs } = useSelector((state) => state.external);
 
   const listFromAccounts = userAccounts?.accounts?.map((acct) => {
     return (
@@ -56,6 +58,19 @@ const Transferform = () => {
       >{`${acct.accountType}`}</option>
     );
   });
+
+  // console.log(externalAccs);
+
+  const listExternalAccounts =
+    externalAccs &&
+    externalAccs.map((acct) => {
+      return (
+        <option
+          key={acct._id}
+          value={acct.account}
+        >{`${acct.bank.toUpperCase()} - ${acct.account}`}</option>
+      );
+    });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,6 +93,7 @@ const Transferform = () => {
   useEffect(() => {
     if (accessToken) {
       dispatch(getUserAccounts());
+      dispatch(getExternalAccs());
     }
   }, [accessToken, dispatch]);
 
@@ -113,6 +129,7 @@ const Transferform = () => {
             handleChange={handleChange}
           >
             <option value="">external accounts</option>
+            {listExternalAccounts}
           </Select>
         </Formdiv>
         <Formdiv>
