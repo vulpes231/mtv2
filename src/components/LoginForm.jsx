@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Custominput from "./Custominput";
-import { MdLock } from "react-icons/md";
+import { MdClose, MdLock } from "react-icons/md";
 import { loginUser } from "../features/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,12 +10,18 @@ const initialState = {
   username: "",
   password: "",
 };
+
 /* eslint-disable react/prop-types */
 const ErrorModal = ({ loginError }) => {
   return (
-    <p className="text-red-500 rounded-sm font-thin text-xs absolute top-3 right-5 z-10 p-6 bg-white">
-      {loginError}
-    </p>
+    <div>
+      <div className="flex justify-end">
+        <MdClose className="text-slate-950" />
+      </div>
+      <p className="font-[Roboto] text-red-500 rounded-sm font-semibold tracking-wide text-xs absolute top-3 right-5 z-10 p-6 bg-white">
+        {loginError}
+      </p>
+    </div>
   );
 };
 
@@ -91,7 +97,7 @@ const LoginForm = () => {
         name={"password"}
         type={"password"}
       />
-      {loginError && <ErrorModal loginError={loginError} />}
+      {error && <ErrorModal loginError={error} />}
       <button
         onClick={handleLogin}
         className="bg-blue-700 px-4 py-2.5 rounded-lg flex items-center gap-2 uppercase text-white"

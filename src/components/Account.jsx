@@ -6,24 +6,15 @@ import Logout from "./Logout";
 import { useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
-
 const MaskedNumber = ({ number }) => {
-  // Convert the number to a string (if it's not already)
   const numStr = number.toString();
 
-  // Check if the length of the number string is greater than 4
   if (numStr.length <= 4) {
-    // If the length is 4 or less, just return the number as is
     return <h5 className="font-normal">{numStr}</h5>;
   }
 
-  // Slice the last 4 characters
   const lastFour = numStr.slice(-4);
-
-  // Create the masked part with Xs
   const maskedPart = "X".repeat(numStr.length - 4);
-
-  // Combine the masked part with the last four characters
   const maskedNumber = maskedPart + lastFour;
 
   return <h5 className="font-normal">{maskedNumber}</h5>;
@@ -82,7 +73,7 @@ const Account = ({ account }) => {
                     type={acct.accountType}
                     number={acct.accountNo}
                     bal={acct.balance}
-                    showTrnxs={() => viewActivity(acct)} // Correctly passing the account number
+                    showTrnxs={() => viewActivity(acct)}
                   />
                 </div>
               );

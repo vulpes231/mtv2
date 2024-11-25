@@ -5,23 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAccessToken } from "../constants";
 import { getAcctTrnxs } from "../features/transactionSlice";
 import numeral from "numeral";
+import Accountaccess from "../components/Accounaccess";
 
 const headers = [
   { id: 1, name: "date" },
   { id: 2, name: "description" },
   { id: 3, name: "amount" },
-  { id: 3, name: "balance" },
+  { id: 4, name: "balance" },
 ];
 
 const AccountTrnx = () => {
   const dispatch = useDispatch();
-
   const { accountNo, accountType } = useParams();
   const accessToken = getAccessToken();
-
   const { acctTrnxs } = useSelector((state) => state.trnx);
-
-  console.log(acctTrnxs);
 
   useEffect(() => {
     if (accessToken) {
@@ -37,13 +34,16 @@ const AccountTrnx = () => {
     <div className="bg-slate-50 min-h-screen">
       <Authnav />
       <div className="p-6 w-full md:max-w-[900px] md:mx-auto">
-        <div className="flex justify-between items-center ">
-          <h3 className="py-4 font-bold text-xl uppercase text-blue-700">
-            {accountType}
-          </h3>
-          <small className=" py-4 text-slate-400 uppercase">
-            Transaction history
-          </small>
+        <div className=" bg-white p-4">
+          <span className="flex justify-between items-center">
+            <h3 className="py-4 font-bold text-xl uppercase text-blue-700">
+              {accountType}
+            </h3>
+            <small className=" py-4 text-slate-400 uppercase">
+              Transaction history
+            </small>
+          </span>
+          <Accountaccess />
         </div>
         <div className="overflow-auto w-full bg-white rounded-sm shadow-xl">
           <table className="min-w-full divide-y-2 divide-slate-500">

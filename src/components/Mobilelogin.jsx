@@ -10,18 +10,16 @@ const initialState = {
   password: "",
 };
 
+/* eslint-disable react/prop-types */
 const ErrorModal = ({ loginError }) => {
-  return (
-    <p className="text-red-500 rounded-sm font-thin text-xs absolute top-0 right-0 z-10 px-4">
-      {loginError}
-    </p>
-  );
+  return <p className="text-red-500 font-medium text-sm ">{loginError}</p>;
 };
 
 const Mobilelogin = ({ closeModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form, setForm] = useState(initialState);
+  const [error, setError] = useState(false);
 
   const { loginLoading, loginError, accessToken } = useSelector(
     (state) => state.login
@@ -53,6 +51,23 @@ const Mobilelogin = ({ closeModal }) => {
     return () => clearTimeout(timeout);
   }, [accessToken, navigate]);
 
+  useEffect(() => {
+    let timeout;
+    if (error) {
+      timeout = 3000;
+      setTimeout(() => {
+        setError(false);
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [error]);
+
+  useEffect(() => {
+    if (loginError) {
+      setError(loginError);
+    }
+  }, [loginError]);
+
   return (
     <div className="absolute top-0 left-0 w-full flex flex-col items-center justify-center gap-4 z-10 bg-zinc-800 h-auto py-10 lg:hidden">
       <div className="relative w-full flex items-center justify-center text-white">
@@ -79,7 +94,7 @@ const Mobilelogin = ({ closeModal }) => {
           name={"password"}
           type={"password"}
         />
-        {loginError && <ErrorModal loginError={loginError} />}
+        {error && <ErrorModal loginError={error} />}
         <button
           onClick={handleLogin}
           className="bg-blue-700 px-4 py-2.5 rounded-sm flex items-center gap-2 uppercase text-white w-full justify-center"
