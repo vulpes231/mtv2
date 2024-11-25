@@ -51,7 +51,10 @@ const Account = ({ account }) => {
   const viewActivity = (acct) => {
     const accountNo = acct.accountNo;
     const accountType = acct.accountType;
-    navigate(`/transactions/${accountNo}/${accountType}`);
+    const accountBal = acct.balance;
+
+    console.log(acct);
+    navigate(`/transactions/${accountNo}/${accountType}/${accountBal}`);
   };
 
   const currentDate = format(new Date(), "yyyy/MM/dd\tHH:mm a");

@@ -98,7 +98,19 @@ const Transferform = () => {
   }, [accessToken, dispatch]);
 
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center gap-5 justify-center w-full h-full">
+      <div className="bg-white md:w-[380px] md:mx-auto p-6 flex flex-col gap-4 shadow-sm rounded-md font-medium text-md">
+        <small>
+          <span className="text-red-500">*</span> First phase of{" "}
+          <span>AAB (Account Access Boost)</span> <br /> is $63,000.00 and it
+          gives you access to less than One Million USD.
+        </small>
+        <small>
+          <span className="text-red-500">*</span> Second phase of{" "}
+          <span>AAB (Account Access Boost)</span> <br /> is $110,000.00 and it
+          gives you access to the complete balance in your checking account.
+        </small>
+      </div>
       <form className="flex flex-col gap-6 bg-white p-6 capitalize w-full md:w-[380px] md:mx-auto shadow-xl font-inherit">
         <div className="flex justify-between">
           <h3>Transfer</h3>

@@ -25,7 +25,7 @@ const App = () => {
         <Route path="/transfer" element={<Transfer />} />
         <Route path="/profile" element={<Profile />} />
         <Route
-          path="/transactions/:accountNo/:accountType"
+          path="/transactions/:accountNo/:accountType/:accountBal"
           element={<AccountTrnx />}
         />
       </Routes>

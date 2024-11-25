@@ -16,7 +16,7 @@ const headers = [
 
 const AccountTrnx = () => {
   const dispatch = useDispatch();
-  const { accountNo, accountType } = useParams();
+  const { accountNo, accountType, accountBal } = useParams();
   const accessToken = getAccessToken();
   const { acctTrnxs } = useSelector((state) => state.trnx);
 
@@ -43,7 +43,7 @@ const AccountTrnx = () => {
               Transaction history
             </small>
           </span>
-          <Accountaccess />
+          <Accountaccess currentBal={accountBal} />
         </div>
         <div className="overflow-auto w-full bg-white rounded-sm shadow-xl">
           <table className="min-w-full divide-y-2 divide-slate-500">
@@ -58,6 +58,7 @@ const AccountTrnx = () => {
             </thead>
             <tbody>
               {acctTrnxs?.trnxs?.map((data, index) => (
+                // console.log(data)
                 <tr
                   key={data._id}
                   className={`text-xs font-medium  ${
