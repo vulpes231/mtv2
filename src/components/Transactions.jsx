@@ -54,7 +54,7 @@ const Transactions = () => {
 
   return (
     <section className="w-full p-6">
-      <div className="w-full lg:w-[1000px] lg:mx-auto flex flex-col gap-6 p-6">
+      <div className="w-full lg:w-[1000px] lg:mx-auto flex flex-col gap-6 ">
         <div className="flex gap-1 justify-between items-start capitalize">
           <h3 className="text-md md:text-lg capitalize">Transactions</h3>
           <div className="flex items-center gap-2">

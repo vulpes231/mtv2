@@ -33,17 +33,19 @@ const AccountTrnx = () => {
   return (
     <div className="bg-slate-50 min-h-screen">
       <Authnav />
-      <div className="p-6 w-full md:max-w-[900px] md:mx-auto">
+      <div className="p-2 lg:p-6 w-full md:max-w-[900px] md:mx-auto">
         <div className=" bg-white p-4">
           <span className="flex justify-between items-center">
             <h3 className="py-4 font-bold text-xl uppercase text-blue-700">
               {accountType}
             </h3>
-            <small className=" py-4 text-slate-400 uppercase">
+            <small className=" py-4 text-slate-500 uppercase">
               Transaction history
             </small>
           </span>
-          <Accountaccess currentBal={accountBal} />
+          {accountType.includes("boost") && (
+            <Accountaccess currentBal={accountBal} />
+          )}
         </div>
         <div className="overflow-auto w-full bg-white rounded-sm shadow-xl">
           <table className="min-w-full divide-y-2 divide-slate-500">
