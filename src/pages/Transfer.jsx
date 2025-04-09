@@ -7,7 +7,7 @@ const Transfer = () => {
     document.title = "Meta - Transfer";
   }, []);
   return (
-    <div className="bg-slate-50 custom-height">
+    <div className="bg-slate-50 min-h-screen">
       <Authnav />
       <Transferform />
     </div>

@@ -31,10 +31,16 @@ const Accountgrid = ({ number, type, bal, showTrnxs }) => {
         <div>
           <h3
             className={`font-bold text-md tracking-wide flex items-center gap-0.5 ${
-              type.includes("access") ? "text-red-500" : "text-slate-800"
+              type.includes("access") && bal > 0
+                ? "text-red-500"
+                : "text-slate-800"
             }`}
           >
-            <span className={`${type.includes("access") ? "flex" : "hidden"}`}>
+            <span
+              className={`${
+                type.includes("access") && bal > 0 ? "flex" : "hidden"
+              }`}
+            >
               -
             </span>{" "}
             ${numeral(bal).format("0,0.00")}

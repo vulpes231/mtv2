@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { MdAttachMoney } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getAccessToken } from "../constants";
 
 const authLinks = [
@@ -20,12 +20,12 @@ const authLinks = [
 const Authnav = () => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
+  const location = useLocation();
+  // const [active, setActive] = useState(1);
 
-  const [active, setActive] = useState(false);
-
-  const handleActive = (item) => {
-    setActive(item);
-  };
+  // const handleActive = (id) => {
+  //   setActive(id);
+  // };
 
   const goToDash = (e) => {
     e.preventDefault();
@@ -47,14 +47,14 @@ const Authnav = () => {
         </h1>
         <div className="flex gap-8 items-center">
           {authLinks.map((link) => {
+            const isActive = location.pathname === link.path;
             return (
-              <Link
-                className={`flex items-center gap-1 capitalize text-sm ${
-                  active === link.id ? "text-blue-600" : "text-[#333]"
+              <span
+                className={`flex items-center gap-1 capitalize text-sm cursor-pointer font-medium text-[12px] lg:text-14px ${
+                  isActive ? "text-blue-600" : "text-[#333]"
                 }`}
                 key={link.id}
-                to={link.path}
-                onClick={() => handleActive(link.id)}
+                onClick={() => navigate(link.path)}
               >
                 <span>
                   {link.name.includes("transfer") ? (
@@ -64,7 +64,7 @@ const Authnav = () => {
                   ) : null}
                 </span>
                 <span>{link.name}</span>
-              </Link>
+              </span>
             );
           })}
         </div>

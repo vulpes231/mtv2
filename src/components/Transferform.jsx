@@ -3,6 +3,7 @@ import { getAccessToken } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAccounts } from "../features/accountSlice";
 import { getExternalAccs } from "../features/externalSlice";
+import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 const Formdiv = ({ children }) => {
@@ -17,7 +18,8 @@ const Input = ({ type, value, handleChange, name, placeHolder }) => {
       onChange={handleChange}
       name={name}
       placeholder={placeHolder}
-      className="w-full p-2 border outline-none focus:border-slate-500"
+      className="w-full p-2 h-[42px] text-[16px] rounded-[5px] border outline-none focus:border-slate-500 font-medium text-[#213617]"
+      autoComplete="off"
     />
   );
 };
@@ -28,7 +30,7 @@ const Select = ({ value, handleChange, name, children }) => {
       value={value}
       onChange={handleChange}
       name={name}
-      className="w-full p-2 border outline-none focus:border-slate-500 bg-transparent capitalize"
+      className="w-full p-2 h-[42px] text-[16px] rounded-[5px] border outline-none focus:border-slate-500 bg-white capitalize font-medium text-[#213617]"
     >
       {children}
     </select>
@@ -98,28 +100,27 @@ const Transferform = () => {
   }, [accessToken, dispatch]);
 
   return (
-    <div className="flex flex-col items-center gap-5 justify-center w-full h-full">
-      <div className="bg-white md:w-[380px] md:mx-auto p-6 flex flex-col gap-4 shadow-sm rounded-md font-medium text-md">
-        <small>
+    <div className="flex flex-col items-center gap-5 justify-center w-full h-full text-[#213615] mt-3 lg:mt-5">
+      <div className="bg-white md:w-[480px] md:mx-auto p-6 flex flex-col gap-4 shadow-sm rounded-md font-medium text-md">
+        <small className="text-[12px] font-normal text-[#979797]">
           <span className="text-red-500">*</span> First phase of{" "}
           <span>AAB (Account Access Boost)</span> <br /> is $63,000.00 and it
           gives you access to less than One Million USD.
         </small>
-        <small>
+        <small className="text-[12px] font-normal text-[#979797]">
           <span className="text-red-500">*</span> Second phase of{" "}
           <span>AAB (Account Access Boost)</span> <br /> is $110,000.00 and it
           gives you access to the complete balance in your checking account.
         </small>
       </div>
-      <form className="flex flex-col gap-6 bg-white p-6 capitalize w-full md:w-[380px] md:mx-auto shadow-xl font-inherit">
+      <form className="flex flex-col gap-6 bg-white p-6 capitalize w-full md:w-[480px] md:mx-auto shadow-xl font-inherit">
         <div className="flex justify-between">
-          <h3>Transfer</h3>
-          <small className="underline text-blue-500">
-            add external account
-          </small>
+          <h3 className="text-[18px] font-semibold">Transfer</h3>
+          <Link className="underline text-blue-500">add external account</Link>
         </div>
+        <hr className="lg:hidden" />
         <Formdiv>
-          <label htmlFor="">
+          <label className="font-normal text-[#979797] text-[14px]" htmlFor="">
             from account <span className="text-red-500">*</span>{" "}
           </label>
           <Select
@@ -132,7 +133,7 @@ const Transferform = () => {
           </Select>
         </Formdiv>
         <Formdiv>
-          <label htmlFor="">
+          <label className="font-normal text-[#979797] text-[14px]" htmlFor="">
             to account <span className="text-red-500">*</span>{" "}
           </label>
           <Select
@@ -145,7 +146,7 @@ const Transferform = () => {
           </Select>
         </Formdiv>
         <Formdiv>
-          <label htmlFor="">
+          <label className="font-normal text-[#979797] text-[14px]" htmlFor="">
             amount <span className="text-red-500">*</span>
           </label>
           <Input
@@ -153,11 +154,13 @@ const Transferform = () => {
             name={"amount"}
             value={form.amount}
             handleChange={handleChange}
-            placeHolder={"0.00"}
+            placeHolder={"$0.00"}
           />
         </Formdiv>
         <Formdiv>
-          <label htmlFor="">memo (optional)</label>
+          <label className="font-normal text-[#979797] text-[14px]" htmlFor="">
+            memo (optional)
+          </label>
           <Input
             type={"text"}
             name={"description"}
@@ -167,9 +170,9 @@ const Transferform = () => {
         </Formdiv>
         <button
           onClick={handleSubmit}
-          className="bg-blue-500 p-2.5 capitalize border-none rounded-3xl text-white shadow-xl"
+          className="bg-blue-500 h-[42px] p-2.5 capitalize border-none rounded-[5px] text-white shadow-xl text-[16px] font-semibold"
         >
-          send
+          send money
         </button>
       </form>
     </div>
