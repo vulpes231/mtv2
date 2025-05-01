@@ -42,7 +42,7 @@ const Accountaccess = ({ currentBal }) => {
           />
           {/* Red indicator at 63k */}
           <div
-            className="absolute top-0 h-full w-[4px] bg-red-500 border border-yellow-400"
+            className="absolute top-0 h-full w-[30px] bg-red-500"
             style={{ left: `${firstPhasePosition}%` }}
           />
         </div>
