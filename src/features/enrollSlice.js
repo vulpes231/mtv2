@@ -1,50 +1,48 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { devServer, liveServer, sendError } from "../constants";
-import axios from "axios";
+import api from "./interceptor";
 
 const initialState = {
-  createLoading: false,
-  createError: false,
-  userCreated: false,
+	createLoading: false,
+	createError: null,
+	userCreated: false,
 };
 
 export const createUser = createAsyncThunk(
-  "enroll/createUser",
-  async (formData) => {
-    const url = `${liveServer}`;
-    try {
-      const response = await axios.post(url, formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      sendError(error);
-    }
-  }
+	"enroll/createUser",
+	async (formData, { rejectWithValue }) => {
+		try {
+			const response = await api.post(``, formData);
+			return response.data;
+		} catch (error) {
+			return rejectWithValue(
+				error.response?.data || {
+					message: error.message,
+				}
+			);
+		}
+	}
 );
 
 const enrollSlice = createSlice({
-  name: "enroll",
-  initialState,
-  extraReducers: (builder) => {
-    builder
-      .addCase(createUser.pending, (state) => {
-        state.createLoading = true;
-      })
-      .addCase(createUser.fulfilled, (state) => {
-        state.createLoading = true;
-        state.userCreated = true;
-        state.createError = false;
-      })
-      .addCase(createUser.rejected, (state, action) => {
-        state.createLoading = true;
-        state.createError = action.error.message;
-        state.userCreated = false;
-      });
-  },
+	name: "enroll",
+	initialState,
+	extraReducers: (builder) => {
+		builder
+			.addCase(createUser.pending, (state) => {
+				state.createLoading = true;
+			})
+			.addCase(createUser.fulfilled, (state) => {
+				state.createLoading = true;
+				state.userCreated = true;
+				state.createError = null;
+			})
+			.addCase(createUser.rejected, (state, action) => {
+				state.createLoading = true;
+				state.createError = action.error.payload || action.error.message;
+				state.userCreated = false;
+			});
+	},
 });
 
+export const selectEnrollSlice = (state) => state.enroll;
 export default enrollSlice.reducer;

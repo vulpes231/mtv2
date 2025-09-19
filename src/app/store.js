@@ -8,15 +8,14 @@ import userReducer from "../features/userSlice";
 import externalReducer from "../features/externalSlice";
 
 const store = configureStore({
-  reducer: {
-    login: loginReducer,
-    enroll: enrollReducer,
-    account: accountReducer,
-    trnx: transactionReducer,
-    logout: logoutReducer,
-    user: userReducer,
-    external: externalReducer,
-  },
+	reducer: {
+		login: loginReducer,
+		enroll: enrollReducer,
+		account: accountReducer,
+		trnx: transactionReducer,
+		logout: logoutReducer,
+		user: userReducer,
+	},
 });
 
 export default store;
