@@ -3,32 +3,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../constants";
 import { Account, Authnav } from "../components";
-import { getUserAccounts } from "../features/accountSlice";
+import { getUserAccounts, selectUserAccounts } from "../features/accountSlice";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const accessToken = getAccessToken();
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const accessToken = getAccessToken();
 
-  const { userAccounts } = useSelector((state) => state.account);
+	const userAccounts = useSelector(selectUserAccounts);
 
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/");
-    } else {
-      dispatch(getUserAccounts());
-      document.title = "Meta - Dashboard";
-    }
-  }, [accessToken, navigate]);
+	useEffect(() => {
+		dispatch(getUserAccounts());
+		document.title = "Meta - Dashboard";
+	}, [dispatch]);
 
-  // console.log(accessToken);
+	useEffect(() => {
+		if (userAccounts) {
+			console.log(userAccounts);
+		}
+	}, [userAccounts]);
 
-  return (
-    <div>
-      <Authnav />
-      <Account account={userAccounts} />
-    </div>
-  );
+	return (
+		<div>
+			<Authnav />
+			<Account account={userAccounts} />
+		</div>
+	);
 };
 
 export default Dashboard;

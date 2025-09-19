@@ -7,7 +7,7 @@ const initialState = {
 	userAccounts: [],
 	fetchExternalLoading: false,
 	fetchExternalError: null,
-	externalAccs: null,
+	externalAccs: [],
 };
 
 export const getUserAccounts = createAsyncThunk(
@@ -54,7 +54,7 @@ const accountSlice = createSlice({
 			.addCase(getUserAccounts.fulfilled, (state, action) => {
 				state.getAccountLoading = false;
 				state.getAccountError = null;
-				state.userAccounts = action.payload;
+				state.userAccounts = action.payload.data;
 			})
 			.addCase(getUserAccounts.rejected, (state, action) => {
 				state.getAccountLoading = false;
@@ -69,7 +69,7 @@ const accountSlice = createSlice({
 			.addCase(getExternalAccs.fulfilled, (state, action) => {
 				state.fetchExternalLoading = false;
 				state.fetchExternalError = null;
-				state.externalAccs = action.payload.externalAccs;
+				state.externalAccs = action.payload.data;
 			})
 			.addCase(getExternalAccs.rejected, (state, action) => {
 				state.fetchExternalLoading = false;
@@ -78,5 +78,9 @@ const accountSlice = createSlice({
 			});
 	},
 });
+
+export const selectAccountSlice = (state) => state.account;
+export const selectUserAccounts = (state) => state.account.userAccounts;
+export const selectExternalAccounts = (state) => state.account.externalAccs;
 
 export default accountSlice.reducer;
