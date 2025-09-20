@@ -5,22 +5,26 @@ const initialState = {
 	getTrnxLoad: false,
 	getTrnxError: null,
 	userTrnxs: [],
+	userTrnxsPagination: null,
 	getAcctTrnxLoad: false,
 	getAcctTrnxError: null,
 	acctTrnxs: [],
+	acctTrnxsPagination: null,
 };
 
 export const getUserTrnxs = createAsyncThunk(
 	"trnx/getUserTrnxs",
-	async (_, { rejectWithValue }) => {
+	async (queryData, { rejectWithValue }) => {
+		const { filterBy, filterValue, limit, sortBy, page } = queryData;
 		try {
-			const response = await api.get("/transactions");
+			const response = await api.get(
+				`/transactions/?filterBy=${filterBy}&filterValue=${filterValue}&page=${page}&limit=${limit}&sortBy=${sortBy}`
+			);
+			console.log(response.data);
 			return response.data;
 		} catch (error) {
 			return rejectWithValue(
-				error.response?.data || {
-					message: error.message,
-				}
+				error.response?.data || { message: error.message }
 			);
 		}
 	}
@@ -29,10 +33,10 @@ export const getUserTrnxs = createAsyncThunk(
 export const getAcctTrnxs = createAsyncThunk(
 	"trnx/getAcctTrnxs",
 	async (queryData, { rejectWithValue }) => {
-		const { acctNo, page, limit, sortBy } = queryData;
+		const { acctNo, page, limit, sortBy, filterValue } = queryData;
 		try {
 			const response = await api.get(
-				`/transactions/?filterBy=${acctNo}&page=${page}&limit=${limit}&sortBy=${sortBy}`
+				`/transactions/?filterBy=${acctNo}&filterValue=${filterValue}&page=${page}&limit=${limit}&sortBy=${sortBy}`
 			);
 			return response.data;
 		} catch (error) {
@@ -56,11 +60,13 @@ const transactionSlice = createSlice({
 			.addCase(getUserTrnxs.fulfilled, (state, action) => {
 				state.getTrnxLoad = false;
 				state.getTrnxError = null;
-				state.userTrnxs = action.payload;
+				state.userTrnxs = action.payload.data;
+				state.userTrnxsPagination = action.payload.pagination;
 			})
 			.addCase(getUserTrnxs.rejected, (state, action) => {
 				state.getTrnxLoad = false;
 				state.userTrnxs = null;
+				state.userTrnxsPagination = null;
 				state.getTrnxError = action.error.payload || action.error.message;
 			});
 		builder
@@ -70,12 +76,14 @@ const transactionSlice = createSlice({
 			.addCase(getAcctTrnxs.fulfilled, (state, action) => {
 				state.getAcctTrnxLoad = false;
 				state.getAcctTrnxError = null;
-				state.acctTrnxs = action.payload;
+				state.acctTrnxs = action.payload.data;
+				state.acctTrnxsPagination = action.payload.pagination;
 			})
 			.addCase(getAcctTrnxs.rejected, (state, action) => {
 				state.getAcctTrnxLoad = false;
 				state.getAcctTrnxError = action.error.payload || action.error.message;
 				state.acctTrnxs = null;
+				state.acctTrnxsPagination = null;
 			});
 	},
 });

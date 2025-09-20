@@ -3,15 +3,15 @@ import { Authnav } from "../components";
 import Transactions from "../components/Transactions";
 
 const Detail = () => {
-  useEffect(() => {
-    document.title = "Transactions";
-  }, []);
-  return (
-    <div className="bg-slate-50 h-full">
-      <Authnav />
-      <Transactions />
-    </div>
-  );
+	useEffect(() => {
+		document.title = "Transactions";
+	}, []);
+	return (
+		<section className="min-h-screen mt-[90px]">
+			<Authnav />
+			<Transactions />
+		</section>
+	);
 };
 
 export default Detail;

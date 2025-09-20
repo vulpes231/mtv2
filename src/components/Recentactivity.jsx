@@ -1,79 +1,107 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAccessToken } from "../constants";
-import { getUserTrnxs } from "../features/transactionSlice";
+import {
+	getUserTrnxs,
+	selectTransactionSlice,
+} from "../features/transactionSlice";
 import numeral from "numeral";
 import { Link } from "react-router-dom";
 
 const headers = [
-  { id: 1, name: "date" },
-  { id: 2, name: "description" },
-  { id: 3, name: "amount" },
+	{ id: 1, name: "Date" },
+	{ id: 2, name: "Description" },
+	{ id: 3, name: "Amount" },
 ];
 
 const Recentactivity = () => {
-  const dispatch = useDispatch();
-  const accessToken = getAccessToken();
+	const dispatch = useDispatch();
+	const [currentPage, setCurrentPage] = useState(1);
 
-  const { userTrnxs } = useSelector((state) => state.trnx);
+	const { userTrnxs } = useSelector(selectTransactionSlice);
 
-  // console.log(userTrnxs);
+	useEffect(() => {
+		dispatch(
+			getUserTrnxs({
+				filterBy: "",
+				filterValue: "",
+				sortBy: "createdAt",
+				page: currentPage,
+				limit: 6,
+			})
+		);
+	}, [dispatch, currentPage]);
 
-  useEffect(() => {
-    if (accessToken) {
-      dispatch(getUserTrnxs());
-    }
-  }, [dispatch, accessToken]);
+	return (
+		<div className="flex flex-col gap-4">
+			{/* Header Section */}
+			<div className="flex justify-between items-center px-3">
+				<h3 className="text-lg md:text-xl font-semibold text-slate-800">
+					Recent Activities
+				</h3>
+				<Link
+					to={"/account"}
+					className="text-blue-600 hover:text-blue-800 transition font-medium"
+				>
+					See all
+				</Link>
+			</div>
 
-  // Limit the transactions to a maximum of 9
-  const transactionsToDisplay = userTrnxs?.userTransactions?.slice(0, 9) || [];
+			{/* Table Section */}
+			<div className="overflow-auto w-full bg-white rounded-lg shadow-md">
+				<table className="min-w-full border-collapse">
+					{/* Table Head */}
+					<thead className="bg-slate-700 text-white uppercase text-sm">
+						<tr>
+							{headers.map((hdr) => (
+								<th
+									key={hdr.id}
+									className="px-4 py-3 text-left tracking-wide font-medium"
+								>
+									{hdr.name}
+								</th>
+							))}
+						</tr>
+					</thead>
 
-  return (
-    <div className="flex flex-col gap-4">
-      <div className="flex justify-between items-center px-3">
-        <h3 className="text-lg md:text-xl capitalize">Recent Activities</h3>
-        <Link to={"/account"} className="underline cursor-pointer">
-          See all
-        </Link>
-      </div>
-      <div className="overflow-auto w-full bg-white rounded-sm shadow-xl">
-        <table className="min-w-full divide-y-2 divide-slate-500">
-          <thead className="bg-zinc-500 text-white font-medium uppercase">
-            <tr>
-              {headers.map((hdr) => (
-                <th className="px-4 py-2.5" key={hdr.id}>
-                  {hdr.name}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {transactionsToDisplay.map((data, index) => (
-              <tr
-                key={data._id}
-                className={`text-xs font-medium  ${
-                  index % 2 !== 0 ? "bg-slate-50" : "bg-white"
-                }`}
-              >
-                <td className="px-4 py-2.5 text-center">{data.date}</td>
-                <td className="px-4 py-2.5 text-center capitalize">
-                  {data.description}
-                </td>
-                <td
-                  className={`px-4 py-2.5 text-center ${
-                    data.type === "credit" ? "text-green-500" : "text-red-500"
-                  }`}
-                >
-                  $
-                  {numeral(parseFloat(data.amount).toFixed(2)).format("0,0.00")}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+					{/* Table Body */}
+					<tbody className="text-slate-700 text-sm">
+						{userTrnxs && userTrnxs.length > 0 ? (
+							userTrnxs.map((data, index) => (
+								<tr
+									key={data._id}
+									className={`${
+										index % 2 === 0 ? "bg-white" : "bg-slate-50"
+									} hover:bg-slate-100 transition`}
+								>
+									<td className="px-4 py-3">{data.date}</td>
+									<td className="px-4 py-3 capitalize">{data.description}</td>
+									<td
+										className={`px-4 py-3 font-semibold ${
+											data.type === "credit" ? "text-green-600" : "text-red-600"
+										}`}
+									>
+										$
+										{numeral(parseFloat(data.amount).toFixed(2)).format(
+											"0,0.00"
+										)}
+									</td>
+								</tr>
+							))
+						) : (
+							<tr>
+								<td
+									colSpan={headers.length}
+									className="px-4 py-6 text-center text-slate-500 italic"
+								>
+									No recent transactions found.
+								</td>
+							</tr>
+						)}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	);
 };
 
 export default Recentactivity;

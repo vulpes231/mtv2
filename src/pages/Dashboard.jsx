@@ -17,17 +17,13 @@ const Dashboard = () => {
 		document.title = "Meta - Dashboard";
 	}, [dispatch]);
 
-	useEffect(() => {
-		if (userAccounts) {
-			console.log(userAccounts);
-		}
-	}, [userAccounts]);
-
 	return (
-		<div>
+		<section className="min-h-screen mt-[80px]">
 			<Authnav />
-			<Account account={userAccounts} />
-		</div>
+			<div className="max-w-7xl mx-auto">
+				<Account account={userAccounts} />
+			</div>
+		</section>
 	);
 };
 

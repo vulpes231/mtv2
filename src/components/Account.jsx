@@ -8,20 +8,11 @@ import Maskednum from "./Maskednum";
 
 const Accountgrid = ({ number, type, bal, showTrnxs }) => {
 	return (
-		<div className="w-full cursor-pointer" onClick={showTrnxs}>
-			<div className="flex justify-between items-center">
-				<div>
+		<div className="w-full cursor-pointer " onClick={showTrnxs}>
+			<div className="flex flex-col gap-4">
+				<div className="w-full flex justify-between items-center">
 					<h3 className="font-medium uppercase text-blue-700">{type}</h3>
-					<Maskednum number={number} />
-				</div>
-				<div>
-					<h3
-						className={`font-bold text-md tracking-wide flex items-center gap-0.5 ${
-							type.includes("access") && bal > 0
-								? "text-red-500"
-								: "text-slate-800"
-						}`}
-					>
+					<span>
 						<span
 							className={`${
 								type.includes("access") && bal > 0 ? "flex" : "hidden"
@@ -30,7 +21,17 @@ const Accountgrid = ({ number, type, bal, showTrnxs }) => {
 							-
 						</span>{" "}
 						${numeral(bal).format("0,0.00")}
-					</h3>
+					</span>
+				</div>
+
+				<div
+					className={`font-bold text-md tracking-wide gap-0.5 flex justify-between items-center ${
+						type.includes("access") && bal > 0
+							? "text-red-500"
+							: "text-slate-800"
+					}`}
+				>
+					<Maskednum number={number} />
 					<small className="capitalize font-thin">available balance</small>
 				</div>
 			</div>
@@ -51,7 +52,7 @@ const Account = ({ account }) => {
 	const user = JSON.parse(sessionStorage.getItem("user"));
 
 	return (
-		<div className="bg-slate-50 ">
+		<div className="">
 			<div className="grid md:grid-cols-3 custom-height">
 				<div className="lg:col-span-2 p-6 flex flex-col gap-4">
 					<h3 className="text-lg md:text-xl capitalize">account summary</h3>
@@ -61,7 +62,7 @@ const Account = ({ account }) => {
 								return (
 									<div
 										key={index}
-										className="bg-white shadow-xl p-6 flex flex-col gap-3 rounded-sm w-full"
+										className="bg-white shadow-xl p-6 flex flex-col gap-3 w-full rounded-lg md:rounded-xl"
 									>
 										<Accountgrid
 											type={acct.accountType}
@@ -75,14 +76,16 @@ const Account = ({ account }) => {
 					</div>
 					<Recentactivity />
 				</div>
-				<div className="bg-zinc-800 p-6 text-white flex flex-col items-center lg:justify-start w-full ">
-					<h3 className="text-lg lg:text-xl capitalize ">
+				<div className="bg-slate-800 p-6 text-white flex flex-col items-center lg:items-start w-full rounded-md shadow-md">
+					<h3 className="text-lg lg:text-xl font-semibold">
 						Welcome {user?.username || ""}
 					</h3>
-					<small className="font-thin">
+					<small className="text-slate-300 mt-1">
 						Your last login was on {currentDate}
 					</small>
-					<Logout />
+					<div className="mt-4">
+						<Logout />
+					</div>
 				</div>
 			</div>
 		</div>
