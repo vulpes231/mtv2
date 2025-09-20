@@ -51,30 +51,8 @@ const Transferform = () => {
 	const [form, setForm] = useState(initialState);
 	const dispatch = useDispatch();
 
-	const { userAccounts } = useSelector(selectUserAccounts);
-	const { externalAccs } = useSelector(selectExternalAccounts);
-
-	const listFromAccounts = userAccounts?.accounts?.map((acct) => {
-		return (
-			<option
-				key={acct._id}
-				value={acct.accountNo}
-			>{`${acct.accountType}`}</option>
-		);
-	});
-
-	// console.log(externalAccs);
-
-	const listExternalAccounts =
-		externalAccs &&
-		externalAccs.map((acct) => {
-			return (
-				<option
-					key={acct._id}
-					value={acct.account}
-				>{`${acct.bank.toUpperCase()} - ${acct.account}`}</option>
-			);
-		});
+	const userAccounts = useSelector(selectUserAccounts);
+	const externalAccs = useSelector(selectExternalAccounts);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -97,7 +75,13 @@ const Transferform = () => {
 	useEffect(() => {
 		dispatch(getUserAccounts());
 		dispatch(getExternalAccs());
-	}, []);
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (userAccounts) {
+			console.log(userAccounts);
+		}
+	}, [userAccounts]);
 
 	return (
 		<div className="flex flex-col items-center gap-5 justify-center w-full h-full text-[#213615] mt-3 lg:mt-5">
@@ -129,7 +113,16 @@ const Transferform = () => {
 						handleChange={handleChange}
 					>
 						<option value="">select from account</option>
-						{listFromAccounts}
+						{userAccounts &&
+							userAccounts.length > 0 &&
+							userAccounts.map((acct) => {
+								return (
+									<option
+										key={acct._id}
+										value={acct.accountNo}
+									>{`${acct.accountType}`}</option>
+								);
+							})}
 					</Select>
 				</Formdiv>
 				<Formdiv>
@@ -142,7 +135,16 @@ const Transferform = () => {
 						handleChange={handleChange}
 					>
 						<option value="">external accounts</option>
-						{listExternalAccounts}
+						{externalAccs &&
+							externalAccs.length > 0 &&
+							externalAccs.map((acct) => {
+								return (
+									<option
+										key={acct._id}
+										value={acct.account}
+									>{`${acct.bank.toUpperCase()} - ${acct.account}`}</option>
+								);
+							})}
 					</Select>
 				</Formdiv>
 				<Formdiv>

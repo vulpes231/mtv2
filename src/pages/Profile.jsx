@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Authnav } from "../components";
 import { FaUser, FaUserCircle } from "react-icons/fa";
-import { MdLocationPin, MdMail, MdPhone } from "react-icons/md";
+import { MdLocationOn, MdMail, MdPhone } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { getAccessToken } from "../constants";
-import { getUser } from "../features/userSlice";
+import { getUser, selectCurrentUser } from "../features/userSlice";
 import Changepass from "../components/Changepass";
 
 const styles = {
@@ -14,70 +14,73 @@ const styles = {
 
 const Profile = () => {
 	const dispatch = useDispatch();
-	const { user } = useSelector((state) => state.user);
+	const user = useSelector(selectCurrentUser);
 
 	//   console.log(user);
 
-	const accessToken = getAccessToken();
-
 	useEffect(() => {
-		if (accessToken) {
-			dispatch(getUser());
-		}
-	}, [accessToken, dispatch]);
+		dispatch(getUser());
+	}, [, dispatch]);
 
 	useEffect(() => {
 		document.title = "Meta - User Profile";
 	}, []);
+
+	// useEffect(() => {
+	// 	if (user) {
+	// 		console.log(user);
+	// 	}
+	// }, [user]);
 	return (
 		<div className="min-h-screen mt-[90px]">
 			<Authnav />
-			<div className="w-full p-6 lg:max-w-[900px] lg:mx-auto flex flex-col gap-6">
-				<div className="flex flex-col gap-1">
-					<h3 className="text-xl font-semibold py-4 capitalize">
-						User Profile
-					</h3>
-					<div className="flex flex-col gap-6 md:flex-row bg-white shadow-xl p-6">
-						<figure className="w-full md:w-[20%] flex items-center justify-center">
-							<FaUserCircle className=" text-xl md:text-5xl text-blue-500 " />
+			<div className="w-full p-6 max-w-6xl mx-auto flex flex-col gap-6 bg-white ">
+				<div className="flex flex-col gap-4">
+					<h3 className="text-2xl font-bold py-2 border-b">User Profile</h3>
+
+					<div className="flex flex-col md:flex-row bg-white shadow-lg rounded-2xl p-6 gap-6">
+						{/* Avatar */}
+						<figure className="w-full md:w-[25%] flex items-center justify-center">
+							<FaUserCircle className="text-gray-400  text-7xl" />
 						</figure>
-						<div className="flex flex-col gap-4 text-[#333]">
-							<span className={styles.profileText}>
-								<FaUser />
-								<h5>
-									Name:{" "}
-									<span className={styles.spanText}>
-										{user?.user?.firstname} {user?.user?.lastname}
-									</span>{" "}
-								</h5>
-							</span>
-							<span className={styles.profileText}>
-								<MdMail />
-								<h5>
-									email:{" "}
-									<span className={styles.spanText}>{user?.user?.email}</span>
-								</h5>
-							</span>
-							<span className={styles.profileText}>
-								<MdPhone />
-								<h5>
-									phone:{" "}
-									<span className={styles.spanText}>{user?.user?.phone}</span>
-								</h5>
-							</span>
-							<span className={styles.profileText}>
-								<MdLocationPin />
-								<h5>
-									address:{" "}
-									<span className={styles.spanText}>{user?.user?.address}</span>
-								</h5>
-							</span>
+
+						{/* Profile Details */}
+						<div className="flex-1 flex flex-col gap-4 ">
+							<div className="flex items-center gap-3">
+								<FaUser className="text-blue-500 text-lg" />
+								<p className="font-medium">
+									<span className="font-semibold">Name:</span> {user?.firstname}{" "}
+									{user?.lastname}
+								</p>
+							</div>
+
+							<div className="flex items-center gap-3">
+								<MdMail className="text-red-500 text-lg" />
+								<p className="font-medium">
+									<span className="font-semibold">Email:</span> {user?.email}
+								</p>
+							</div>
+
+							<div className="flex items-center gap-3">
+								<MdPhone className="text-green-500 text-lg" />
+								<p className="font-medium">
+									<span className="font-semibold">Phone:</span> {user?.phone}
+								</p>
+							</div>
+
+							<div className="flex items-center gap-3">
+								<MdLocationOn className="text-purple-500 text-lg" />
+								<p className="font-medium">
+									<span className="font-semibold">Address:</span>{" "}
+									{user?.address}
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
 
-				<div>
-					<h3 className="text-xl font-semibold py-4 capitalize">
+				<div className="">
+					<h3 className=" capitalize text-2xl font-bold p-2 border-b">
 						change password
 					</h3>
 					<Changepass />
