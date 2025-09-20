@@ -1,7 +1,7 @@
 import axios from "axios";
 import { devServer, getAccessToken } from "../constants";
 
-const api = await axios.create({
+const api = axios.create({
 	baseURL: `${devServer}`,
 	headers: {
 		"Content-Type": "application/json",
