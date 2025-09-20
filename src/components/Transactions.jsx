@@ -61,7 +61,7 @@ const Transactions = () => {
 	};
 
 	return (
-		<section className="w-full p-6 min-h-screen">
+		<section className="w-full p-3 md:p-6 min-h-screen">
 			<div className="w-full max-w-6xl mx-auto flex flex-col gap-6">
 				{/* Header + Filter */}
 				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -163,6 +163,16 @@ const Transactions = () => {
 									</td>
 								</tr>
 							)}
+							{!userTrnxs && (
+								<tr>
+									<td
+										colSpan={headers.length}
+										className="px-6 py-8 text-center text-gray-400"
+									>
+										No transactions found
+									</td>
+								</tr>
+							)}
 							{getTrnxLoad && (
 								<tr>
 									<td
@@ -182,11 +192,11 @@ const Transactions = () => {
 					<div className="text-sm">
 						Showing page{" "}
 						<span className="font-medium ">
-							{userTrnxsPagination?.currentPage}
+							{userTrnxsPagination?.currentPage || 1}
 						</span>{" "}
 						of{" "}
 						<span className="font-medium ">
-							{userTrnxsPagination?.totalPage}
+							{userTrnxsPagination?.totalPage || 1}
 						</span>
 					</div>
 

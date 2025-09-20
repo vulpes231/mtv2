@@ -60,7 +60,7 @@ const Account = ({ account }) => {
 	return (
 		<div className="">
 			<div className="grid md:grid-cols-3 custom-height">
-				<div className="lg:col-span-2 p-6 flex flex-col gap-8">
+				<div className="lg:col-span-2 p-3 md:p-6 flex flex-col gap-8">
 					<h3 className="text-xl md:text-2xl capitalize font-medium">
 						account summary
 					</h3>

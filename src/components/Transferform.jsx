@@ -84,8 +84,8 @@ const Transferform = () => {
 	}, [userAccounts]);
 
 	return (
-		<div className="flex flex-col items-center gap-5 justify-center w-full h-full text-[#213615] mt-3 lg:mt-5">
-			<div className="bg-white md:w-[480px] md:mx-auto p-6 flex flex-col gap-4 shadow-sm rounded-md font-medium text-md">
+		<div className="flex flex-col items-center gap-5 justify-center w-full h-full text-[#213615] mt-3 lg:mt-5 p-3 md:p-6">
+			<div className="bg-white md:w-[480px] md:mx-auto p-3 md:p-6 flex flex-col gap-4 shadow-sm rounded-md font-medium text-md">
 				<small className="text-[12px] font-normal text-[#979797]">
 					<span className="text-red-500">*</span> First phase of{" "}
 					<span>AAB (Account Access Boost)</span> <br /> is $63,000.00 and it
@@ -97,7 +97,7 @@ const Transferform = () => {
 					gives you access to the complete balance in your checking account.
 				</small>
 			</div>
-			<form className="flex flex-col gap-6 bg-white p-6 capitalize w-full md:w-[480px] md:mx-auto shadow-xl font-inherit">
+			<form className="flex flex-col gap-6 bg-white p-6 capitalize w-full md:w-[480px] md:mx-auto shadow-xl font-inherit rounded-md md:rounded-lg">
 				<div className="flex justify-between">
 					<h3 className="text-[18px] font-semibold">Transfer</h3>
 					<Link className="underline text-blue-500">add external account</Link>

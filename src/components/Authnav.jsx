@@ -1,8 +1,17 @@
 import React from "react";
-import { MdAttachMoney, MdHome, MdHistory } from "react-icons/md";
+import {
+	MdAttachMoney,
+	MdHome,
+	MdHistory,
+	MdMenu,
+	MdClose,
+} from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
+import { useDispatch, useSelector } from "react-redux";
+import { selectNavSlice, setToggle } from "../features/navSlice";
+import Mobilemenu from "./Mobilemenu";
 
 const authLinks = [
 	{
@@ -30,12 +39,15 @@ const authLinks = [
 const Authnav = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
+	const dispatch = useDispatch();
+
+	const { toggle } = useSelector(selectNavSlice);
 
 	return (
 		<header className="h-[70px] fixed top-0 left-0 w-full bg-white shadow-sm flex items-center justify-center z-50">
 			<nav className="w-full flex justify-between items-center p-4 max-w-7xl mx-auto">
 				<Logo />
-				<div className="flex gap-8 items-center">
+				<div className="hidden md:flex gap-8 items-center">
 					{authLinks.map((link) => {
 						const isActive = location.pathname === link.path;
 						return (
@@ -62,6 +74,14 @@ const Authnav = () => {
 						);
 					})}
 				</div>
+				{toggle && <Mobilemenu location={location} links={authLinks} />}
+				<span className="sm:hidden" onClick={() => dispatch(setToggle())}>
+					{!toggle ? (
+						<MdMenu className="w-6 h-6" />
+					) : (
+						<MdClose className="w-6 h-6" />
+					)}
+				</span>
 			</nav>
 		</header>
 	);
