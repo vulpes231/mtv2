@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserAccounts, selectUserAccounts } from "../features/accountSlice";
 import {
 	getUserTrnxs,
 	selectTransactionSlice,
@@ -19,7 +18,6 @@ const Transactions = () => {
 	const { userTrnxs, userTrnxsPagination, getTrnxLoad } = useSelector(
 		selectTransactionSlice
 	);
-	const userAccounts = useSelector(selectUserAccounts);
 
 	const dispatch = useDispatch();
 
@@ -38,7 +36,6 @@ const Transactions = () => {
 				limit: itemsPerPage,
 			})
 		);
-		dispatch(getUserAccounts());
 	}, [dispatch, currentPage, filter]);
 
 	// Keep page in sync with backend pagination
@@ -47,15 +44,6 @@ const Transactions = () => {
 			setCurrentPage(userTrnxsPagination.currentPage);
 		}
 	}, [userTrnxsPagination]);
-
-	const myAccounts =
-		userAccounts &&
-		userAccounts.length > 0 &&
-		userAccounts.map((acct) => (
-			<option className="uppercase" key={acct._id} value={acct.accountNo}>
-				{`${acct.accountType} - ${acct.accountNo}`}
-			</option>
-		));
 
 	const handlePageChange = (pageNumber) => {
 		if (pageNumber > 0 && pageNumber <= userTrnxsPagination?.totalPage) {

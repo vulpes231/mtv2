@@ -4,7 +4,7 @@ import Transactions from "../components/Transactions";
 
 const Detail = () => {
 	useEffect(() => {
-		document.title = "Transactions";
+		document.title = "MetaBank - History";
 	}, []);
 	return (
 		<section className="min-h-screen mt-[90px]">

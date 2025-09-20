@@ -20,7 +20,7 @@ export const getUserTrnxs = createAsyncThunk(
 			const response = await api.get(
 				`/transactions/?filterBy=${filterBy}&filterValue=${filterValue}&page=${page}&limit=${limit}&sortBy=${sortBy}`
 			);
-			console.log(response.data);
+			// console.log(response.data);
 			return response.data;
 		} catch (error) {
 			return rejectWithValue(
@@ -33,17 +33,18 @@ export const getUserTrnxs = createAsyncThunk(
 export const getAcctTrnxs = createAsyncThunk(
 	"trnx/getAcctTrnxs",
 	async (queryData, { rejectWithValue }) => {
-		const { acctNo, page, limit, sortBy, filterValue } = queryData;
+		const { filterBy, filterValue, limit, sortBy, page, accountNo } = queryData;
+
 		try {
-			const response = await api.get(
-				`/transactions/?filterBy=${acctNo}&filterValue=${filterValue}&page=${page}&limit=${limit}&sortBy=${sortBy}`
-			);
+			const url = `/transactions/account/?filterBy=${filterBy}&filterValue=${filterValue}&page=${page}&limit=${limit}&sortBy=${sortBy}&accountNo=${accountNo}`;
+			console.log("Request URL:", url);
+			const response = await api.get(url);
+
+			console.log(response.data);
 			return response.data;
 		} catch (error) {
 			return rejectWithValue(
-				error.response?.data || {
-					message: error.message,
-				}
+				error.response?.data || { message: error.message }
 			);
 		}
 	}

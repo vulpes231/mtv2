@@ -11,7 +11,13 @@ const Accountgrid = ({ number, type, bal, showTrnxs }) => {
 		<div className="w-full cursor-pointer " onClick={showTrnxs}>
 			<div className="flex flex-col gap-4">
 				<div className="w-full flex justify-between items-center">
-					<h3 className="font-medium uppercase text-blue-700">{type}</h3>
+					<h3 className="font-medium uppercase text-blue-700 whitespace-nowrap text-md">
+						{type === "facebook premium checking"
+							? "FB Premium Checking"
+							: type === "account access boost (AAB)"
+							? "AAB Account"
+							: type}
+					</h3>
 					<span>
 						<span
 							className={`${
@@ -43,9 +49,9 @@ const Account = ({ account }) => {
 	const navigate = useNavigate();
 
 	const viewActivity = (acct) => {
-		const accountNo = acct.accountNo;
-		console.log(acct);
-		navigate(`/transactions/${accountNo}`);
+		const accountId = acct._id;
+
+		navigate(`/transactions/${accountId}`);
 	};
 	// console.log(account);
 	const currentDate = sessionStorage.getItem("lastLogin");
@@ -54,8 +60,10 @@ const Account = ({ account }) => {
 	return (
 		<div className="">
 			<div className="grid md:grid-cols-3 custom-height">
-				<div className="lg:col-span-2 p-6 flex flex-col gap-4">
-					<h3 className="text-lg md:text-xl capitalize">account summary</h3>
+				<div className="lg:col-span-2 p-6 flex flex-col gap-8">
+					<h3 className="text-xl md:text-2xl capitalize font-medium">
+						account summary
+					</h3>
 					<div className="grid gap-4 md:grid-cols-2">
 						{account.length > 0 &&
 							account.map((acct, index) => {
