@@ -11,7 +11,7 @@ const sendError = (error) => {
 };
 
 const getAccessToken = () => {
-	return sessionStorage.getItem("accessToken") || null;
+	return JSON.parse(sessionStorage.getItem("accessToken")) || null;
 };
 
 export { devServer, liveServer, sendError, getAccessToken };

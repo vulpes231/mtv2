@@ -50,6 +50,7 @@ const LoginForm = () => {
 		let timeout;
 		if (accessToken) {
 			sessionStorage.setItem("lastLogin", new Date());
+			sessionStorage.setItem("accessToken", JSON.stringify(accessToken));
 			timeout = 1000;
 			setTimeout(() => {
 				dispatch(resetLogin());

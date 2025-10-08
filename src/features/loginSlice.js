@@ -14,6 +14,7 @@ export const loginUser = createAsyncThunk(
 	async (formData, { rejectWithValue }) => {
 		try {
 			const response = await api.post("/auth", formData);
+			console.log(response.data);
 			return response.data;
 		} catch (error) {
 			return rejectWithValue(
@@ -46,7 +47,7 @@ const loginSlice = createSlice({
 				state.accessToken = action.payload.token;
 				state.loginError = null;
 				state.user = action.payload.data;
-				sessionStorage.setItem("accessToken", action.payload.token);
+
 				sessionStorage.setItem("user", JSON.stringify(action.payload.data));
 			})
 			.addCase(loginUser.rejected, (state, action) => {

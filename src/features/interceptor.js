@@ -30,8 +30,8 @@ api.interceptors.response.use(
 			sessionStorage.clear();
 
 			// Avoid infinite redirect loop
-			if (window.location.pathname !== "/login") {
-				window.location.href = "/login";
+			if (window.location.pathname !== "/") {
+				window.location.href = "/";
 			}
 		}
 
