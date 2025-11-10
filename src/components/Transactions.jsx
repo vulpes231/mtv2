@@ -12,6 +12,7 @@ const headers = [
 	{ id: 2, name: "description" },
 	{ id: 3, name: "amount" },
 	{ id: 4, name: "balance" },
+	{ id: 5, name: "status" },
 ];
 
 const Transactions = () => {
@@ -149,6 +150,22 @@ const Transactions = () => {
 											{numeral(parseFloat(data.balance).toFixed(2)).format(
 												"0,0.00"
 											)}
+										</td>
+										{/* status */}
+										<td className="px-6 py-4 text-gray-700 dark:text-gray-300">
+											<span
+												className={`${
+													data.status === "pending"
+														? "bg-yellow-50 text-yellow-500"
+														: data.status === "completed"
+														? "bg-green-50 text-green-500"
+														: data.status === "failed"
+														? "bg-red-50 text-red-500"
+														: ""
+												} px-3 py-1 rounded-lg text-xs font-medium capitalize`}
+											>
+												{data.status === "failed" ? "reversed" : data.status}
+											</span>
 										</td>
 									</tr>
 								))}
