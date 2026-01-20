@@ -72,7 +72,7 @@ const Account = ({ account }) => {
                 return (
                   <div
                     key={index}
-                    className="bg-white shadow-xl p-6 flex flex-col gap-3 w-full rounded-lg md:rounded-xl"
+                    className="bg-white shadow-sm p-6 flex flex-col gap-3 w-full rounded-lg md:rounded-xl"
                   >
                     <Accountgrid
                       type={acct.accountType}
