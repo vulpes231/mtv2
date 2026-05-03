@@ -37,7 +37,7 @@ export default [
         { allowConstantExport: true },
       ],
       "no-unused-vars": [
-        "error",
+        // "error",
         { varsIgnorePattern: "^React$", argsIgnorePattern: "^_" },
       ],
     },

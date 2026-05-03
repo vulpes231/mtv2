@@ -15,24 +15,15 @@ const Accountgrid = ({ number, type, bal, showTrnxs }) => {
             {type === "facebook premium checking"
               ? "FB Premium Checking"
               : type === "account access boost (AAB)"
-              ? "AAB Account"
-              : type}
+                ? "AAB Account"
+                : type}
           </h3>
           <span
             className={`flex items-center ${
-              type.includes("access") && bal > 0
-                ? "text-red-500"
-                : "text-slate-800"
+              bal < 0 ? "text-red-500" : "text-slate-800"
             }`}
           >
-            <span
-              className={`${
-                type.includes("access") && bal > 0 ? "flex" : "hidden"
-              }`}
-            >
-              -
-            </span>{" "}
-            ${numeral(bal).format("0,0.00")}
+            {numeral(bal).format("$0,0.00")}
           </span>
         </div>
 
@@ -63,7 +54,7 @@ const Account = ({ account }) => {
     <div className="">
       <div className="grid md:grid-cols-3 custom-height">
         <div className="lg:col-span-2 p-3 md:p-6 flex flex-col gap-8">
-          <h3 className="text-xl md:text-2xl capitalize font-medium">
+          <h3 className="text-md md:text-lg capitalize font-medium">
             account summary
           </h3>
           <div className="grid gap-4 md:grid-cols-2">
@@ -72,12 +63,12 @@ const Account = ({ account }) => {
                 return (
                   <div
                     key={index}
-                    className="bg-white shadow-sm p-6 flex flex-col gap-3 w-full rounded-lg md:rounded-xl"
+                    className="bg-white shadow-sm p-6 flex flex-col gap-3 w-full rounded-lg md:rounded-md"
                   >
                     <Accountgrid
-                      type={acct.accountType}
-                      number={acct.accountNo}
-                      bal={acct.balance}
+                      type={acct.accountName}
+                      number={acct.accountNumber}
+                      bal={acct.balance.available}
                       showTrnxs={() => viewActivity(acct)}
                     />
                   </div>

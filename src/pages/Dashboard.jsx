@@ -23,7 +23,7 @@ const Dashboard = () => {
     <section className="min-h-screen mt-[80px]">
       <Authnav />
       <div className="max-w-7xl mx-auto">
-        <NotifyUser isOpen={showAlert} setIsOpen={handleIsOpen} />
+        {/* <NotifyUser isOpen={showAlert} setIsOpen={handleIsOpen} /> */}
       </div>
       <div className="max-w-7xl mx-auto">
         <Account account={userAccounts} />
